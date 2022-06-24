@@ -1,0 +1,12 @@
+version: '3.9'
+services:
+    myorders:
+        build:
+            context: ./
+            dockerfile: Dockerfile.app
+            target: initial
+        image: myorders_app_dev
+        container_name: myorders_app_dev
+        volumes:
+            - ../myorders:/app/myorders
+        tty: true
