@@ -2,11 +2,11 @@ version: '3.9'
 services:
     myorders:
         build:
-            context: ./
-            dockerfile: Dockerfile.app
-            target: initial
+            context: .
+            dockerfile: ./dockerfile/Dockerfile.app
+            target: development
         image: myorders_app_dev
         container_name: myorders_app_dev
         volumes:
-            - ../myorders:/app/myorders
+            - ./myorders:/app/myorders
         tty: true

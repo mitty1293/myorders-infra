@@ -21,3 +21,14 @@ RUN curl -sSL https://install.python-poetry.org | python3 -
 ENV PATH="${POETRY_HOME}/bin:$PATH"
 # import project files
 WORKDIR ${APP_PATH}
+
+#
+# development
+#
+FROM initial as development
+ARG APP_NAME
+ARG APP_PATH
+# install dependencies
+WORKDIR ${APP_PATH}/${APP_NAME}
+COPY ./myorders/poetry.lock ./myorders/pyproject.toml ./
+RUN poetry install --no-interaction
