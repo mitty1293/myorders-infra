@@ -7,6 +7,9 @@ services:
             target: development
         image: myorders_app_dev
         container_name: myorders_app_dev
+        depends_on:
+            - database
+            - database_manager
         ports:
             - "8000:8000"
         volumes:

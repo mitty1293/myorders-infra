@@ -16,7 +16,10 @@ ENV PYTHONUNBUFFERED=1 \
 RUN apt update \
     && apt install --no-install-recommends -y \
     curl \
-    git
+    git \
+    python3-dev \
+    default-libmysqlclient-dev \
+    build-essential
 RUN curl -sSL https://install.python-poetry.org | python3 -
 ENV PATH="${POETRY_HOME}/bin:$PATH"
 # import project files
