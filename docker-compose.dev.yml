@@ -1,6 +1,6 @@
 version: '3.9'
 services:
-    myorders:
+    app:
         build:
             context: .
             dockerfile: ./dockerfile/Dockerfile.app
@@ -12,3 +12,38 @@ services:
         volumes:
             - ./myorders:/app/myorders
         tty: true
+        networks:
+            - net
+    database:
+        image: mariadb:10.8.3
+        container_name: myorders_db
+        environment:
+            - MARIADB_ROOT_PASSWORD_FILE=/run/secrets/mariadb_root_password
+            - MARIADB_PASSWORD_FILE=/run/secrets/mariadb_password
+            - MARIADB_USER=myorders_user
+            - MARIADB_DATABASE=myorders_db
+            - TZ=Asia/Tokyo
+        command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+        secrets:
+            - mariadb_root_password
+            - mariadb_password
+        networks:
+            - net
+    database_manager:
+        image: adminer:4.8.1-standalone
+        container_name: myorders_db_manager
+        environment:
+            - ADMINER_DEFAULT_SERVER=myorders_db
+            - TZ=Asia/Tokyo
+        ports:
+            - "8080:8080"
+        networks:
+            - net
+secrets:
+    mariadb_root_password:
+        file: ./secrets/mariadb_root_password
+    mariadb_password:
+        file: ./secrets/mariadb_password
+networks:
+    net:
+        driver: bridge
