@@ -32,3 +32,5 @@ ARG APP_PATH
 WORKDIR ${APP_PATH}/${APP_NAME}
 COPY ./myorders/poetry.lock ./myorders/pyproject.toml ./
 RUN poetry install --no-interaction
+ENTRYPOINT [ "poetry", "run" ]
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
