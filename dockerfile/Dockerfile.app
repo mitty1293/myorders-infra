@@ -17,9 +17,14 @@ RUN apt update \
     && apt install --no-install-recommends -y \
     curl \
     git \
+    # for mysqlclient
     python3-dev \
     default-libmysqlclient-dev \
-    build-essential
+    build-essential \
+    # for django-extensions graph_models
+    libgraphviz-dev \
+    graphviz \
+    pkg-config
 RUN curl -sSL https://install.python-poetry.org | python3 -
 ENV PATH="${POETRY_HOME}/bin:$PATH"
 # import project files
